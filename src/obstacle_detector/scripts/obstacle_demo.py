@@ -7,12 +7,6 @@ def stopRobot():
     rospy.loginfo('stooop')
 
 def callback(msg):
-    rospy.loginfo("rangemax %s" %msg.range_max)
-    rospy.loginfo(len(msg.ranges))
-    rospy.loginfo(msg.ranges)
-    rospy.sleep(10)
-    if any(x>1.0 for x in msg.ranges):
-        stopRobot()
     pub = rospy.Publisher('mobile_base/commands/velocity', Twist, queue_size=10)
     twist = Twist()
     twist.linear.x = 3.0
