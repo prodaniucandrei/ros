@@ -1,0 +1,84 @@
+<launch>
+  <arg name="model" default="$(env TURTLEBOT3_MODEL)" doc="model type [burger, waffle]"/>
+
+  <!-- Turtlebot3 -->
+  <include file="$(find turtlebot3_bringup)/launch/turtlebot3_remote.launch" />
+
+  <!-- Map server -->
+  <arg name="map_file" default="$(find prd_navigation)/config/woodmap.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+  </node>
+
+  <!-- AMCL -->
+  <arg name="initial_pose_x" default="1.89524"/>
+  <arg name="initial_pose_y" default="-2.05783"/>
+  <arg name="initial_pose_a" default="-0.25"/>
+  <include file="$(find turtlebot3_navigation)/launch/amcl.launch.xml">
+    <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+    <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+    <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+  </include>
+  <!-- move_base -->
+  <arg name="cmd_vel_topic" default="/cmd_vel" />
+  <arg name="odom_topic" default="odom" />
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
+
+    <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turtlebot3_navigation)/param/costmap_common_params_$(arg model).yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find turtlebot3_navigation)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot3_navigation)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot3_navigation)/param/move_base_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot3_navigation)/param/dwa_local_planner_params.yaml" command="load" />
+
+    <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+  </node>
+</launch>
+
+<!-- <launch>
+    <arg name="map_file" default="$(find prd_navigation)/config/woodmap.yaml"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)"/>
+  
+  <arg name="initial_pose_x" default="1.079964"/>
+  <arg name="initial_pose_y" default="-1.210131"/>
+  <arg name="initial_pose_a" default="0.0"/>
+  <arg name="amcl_launch_file" default="$(find turtlebot_navigation)/launch/includes/amcl/$(env TURTLEBOT_3D_SENSOR)_amcl.launch.xml"/>
+  
+  <include file="$(arg amcl_launch_file)">
+    <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+    <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+    <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+  </include>
+
+
+    <arg name="odom_frame_id" default="odom"/>
+    <arg name="base_frame_id" default="base_footprint"/>
+    <arg name="global_frame_id" default="map"/>
+    <arg name="odom_topic" default="odom" />
+    <arg name="laser_topic" default="scan" />
+
+
+   <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+    
+    <rosparam file="$(find turtlebot_navigation)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+    <rosparam file="$(find turtlebot_navigation)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+    <rosparam file="$(find turtlebot_navigation)/param/local_costmap_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot_navigation)/param/global_costmap_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot_navigation)/param/dwa_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot_navigation)/param/move_base_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot_navigation)/param/global_planner_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot_navigation)/param/navfn_global_planner_params.yaml" command="load" />
+
+    <param name="global_costmap/global_frame" value="$(arg global_frame_id)"/>
+    <param name="global_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+    <param name="local_costmap/global_frame" value="$(arg odom_frame_id)"/>
+    <param name="local_costmap/robot_base_frame" value="$(arg base_frame_id)"/>
+    <param name="DWAPlannerROS/global_frame_id" value="$(arg odom_frame_id)"/>
+
+    <remap from="cmd_vel" to="navigation_velocity_smoother/raw_cmd_vel"/>
+    <remap from="odom" to="$(arg odom_topic)"/>
+    <remap from="scan" to="$(arg laser_topic)"/>
+
+  </node>
+</launch> -->

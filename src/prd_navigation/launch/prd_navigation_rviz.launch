@@ -1,0 +1,9 @@
+<launch>
+
+	<include file="$(find prd_navigation)/launch/building_world.launch">
+        <arg name="world_name" value="$(find prd_navigation)/config/ex9.world"/>
+    </include>
+    <include file="$(find prd_navigation)/launch/turtlebot_navigation.launch"/>
+    <include file="$(find prd_navigation)/launch/turtlebot_gazebo_rviz.launch"/>
+
+</launch>

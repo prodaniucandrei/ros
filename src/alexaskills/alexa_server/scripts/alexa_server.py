@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 from turtle_navigation import navigate_forward
+from turtle_pose import PostPose
 from geometry_msgs.msg import Twist
 import rospy
 from nav_msgs.msg import Odometry
@@ -18,7 +19,8 @@ def api_articles():
     content = request.get_json()
     callback(content)
     print(content['text'])
-    navigate_forward(content['text'])
+    #navigate_forward(content['text'])
+    PostPose()
     return 'command executed'
 
 @app.route('/querylocations', methods=['GET'])
