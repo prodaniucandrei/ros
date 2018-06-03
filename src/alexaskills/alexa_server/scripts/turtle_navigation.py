@@ -2,7 +2,7 @@
 
 import rospy
 from geometry_msgs.msg import Twist 
-
+from std_msgs.msg import String
 
 def navigate_forward(distance):
     print('aici')

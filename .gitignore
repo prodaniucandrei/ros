@@ -3,3 +3,4 @@ build
 .catkin_workspace
 .vscode
 src/document_scanner/scripts/pyimagesearch/__pycache__/transform.cpython-34.pyc
+install

@@ -13,14 +13,9 @@ def api_root():
     callback('room')
     return 'Welcome'
 
-@app.route('/navigate', methods=['POST'])
-def api_articles():
-    print(request.is_json)
-    content = request.get_json()
-    callback(content)
-    print(content['text'])
-    #navigate_forward(content['text'])
-    PostPose()
+@app.route('/navigate/<room>', methods=['POST'])
+def navigate(room):
+    PostPose(room)
     return 'command executed'
 
 @app.route('/querylocations', methods=['GET'])
