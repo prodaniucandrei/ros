@@ -6,5 +6,7 @@
     <include file="$(find prd_navigation)/launch/turtlebot_navigation.launch"/>
     <include file="$(find prd_navigation)/launch/turtlebot_gazebo_rviz.launch"/>
     
+    <node name="post_cmd" pkg="prd_navigation" type="alexa_server.py" output="screen"/>
+
     <node name="cmd_processor" pkg="prd_navigation" type="command_processor.py" output="screen"/>
 </launch>

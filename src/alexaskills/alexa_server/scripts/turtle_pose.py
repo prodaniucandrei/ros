@@ -33,7 +33,7 @@ def PostPose(room):
     pub = rospy.Publisher('alexa_command', command_msg, queue_size=10)
     rate = rospy.Rate(10)
     rate.sleep()
-    
+    command = command_msg()
     command.command_name = "nav"
     command.value = int(room)
     pub.publish(command)
