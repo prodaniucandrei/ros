@@ -32,11 +32,6 @@ def interactions():
 def callback(msg):
 	rospy.loginfo('position: {}'.format(msg))
 
-def main():
-    if not rosnode.rosnode_ping('log_writer', 2):
-	    rospy.init_node('log_writer')
-
 if __name__ == '__main__':
-    #main()
     app.run(debug=False)
 

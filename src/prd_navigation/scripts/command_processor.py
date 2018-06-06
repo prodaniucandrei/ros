@@ -5,10 +5,13 @@ import actionlib
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from std_msgs.msg import String
 from prd_navigation.msg import command_msg
+import json
+
 def handler(data):
     print(data)
     try:
-        result = movebase_client(1)
+        destination = get_destination(data.value)
+        result = movebase_client(destination)
         if result:
             print("Goal execution done!")
     except rospy.ROSInterruptException:
@@ -23,7 +26,7 @@ def listener():
     rospy.spin()
 
 
-def getGoal(room):
+def getGoal(x,y):
     goal = MoveBaseGoal()
     goal.target_pose.header.frame_id = "map"
     goal.target_pose.header.stamp = rospy.Time.now()
@@ -32,12 +35,20 @@ def getGoal(room):
     goal.target_pose.pose.orientation.w = 1.0
     return goal
 
+def get_destination(tag):
+    file = open('mapping.json', 'r')
+    content = json.load(file)
+    x = content['mappings'][0]['pose_x']
+    y = content['mappings'][0]['pose_y']
+    print(content['mappings'][0]['pose_x'] + content['mappings'][0]['pose_y'])
+    return getGoal(x, y)
+
 def movebase_client(room):
 
     client = actionlib.SimpleActionClient('move_base', MoveBaseAction)
     client.wait_for_server()
 
-    client.send_goal(getGoal(room))
+    client.send_goal(room)
     wait = client.wait_for_result()
     if not wait:
         rospy.logerr("Action server not available!")
@@ -46,4 +57,5 @@ def movebase_client(room):
         return client.get_result()
 
 if __name__ == '__main__':
+    #get_destination()
     listener()
