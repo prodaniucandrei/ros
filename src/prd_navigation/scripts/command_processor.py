@@ -33,8 +33,8 @@ def getGoal(x,y):
     goal = MoveBaseGoal()
     goal.target_pose.header.frame_id = "map"
     goal.target_pose.header.stamp = rospy.Time.now()
-    goal.target_pose.pose.position.x = x
-    goal.target_pose.pose.position.y = y
+    goal.target_pose.pose.position.x = float(x)
+    goal.target_pose.pose.position.y = float(y)
     goal.target_pose.pose.orientation.w = 1.0
     return goal
 
