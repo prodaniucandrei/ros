@@ -13,7 +13,7 @@
   <arg name="initial_pose_x" default="1.89524"/>
   <arg name="initial_pose_y" default="-2.05783"/>
   <arg name="initial_pose_a" default="-0.25"/>
-  <include file="$(find turtlebot3_navigation)/launch/amcl.launch.xml">
+  <include file="$(find turtlebot3_navigation)/launch/amcl.launch">
     <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
     <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
     <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
@@ -29,7 +29,7 @@
     <rosparam file="$(find turtlebot3_navigation)/param/local_costmap_params.yaml" command="load" />
     <rosparam file="$(find turtlebot3_navigation)/param/global_costmap_params.yaml" command="load" />
     <rosparam file="$(find turtlebot3_navigation)/param/move_base_params.yaml" command="load" />
-    <rosparam file="$(find turtlebot3_navigation)/param/dwa_local_planner_params.yaml" command="load" />
+    <rosparam file="$(find turtlebot3_navigation)/param/dwa_local_planner_params_burger.yaml" command="load" />
 
     <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
     <remap from="odom" to="$(arg odom_topic)"/>

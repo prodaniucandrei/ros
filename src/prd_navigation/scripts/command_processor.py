@@ -6,6 +6,9 @@ from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
 from std_msgs.msg import String
 from prd_navigation.msg import command_msg
 import json
+import os
+
+json_path = "~/catkin_ws/src/prd_navigation/scripts/mapping.json"
 
 def handler(data):
     print(data)
@@ -30,17 +33,17 @@ def getGoal(x,y):
     goal = MoveBaseGoal()
     goal.target_pose.header.frame_id = "map"
     goal.target_pose.header.stamp = rospy.Time.now()
-    goal.target_pose.pose.position.x = -0.227663040161
-    goal.target_pose.pose.position.y = 2.27461719513
+    goal.target_pose.pose.position.x = x
+    goal.target_pose.pose.position.y = y
     goal.target_pose.pose.orientation.w = 1.0
     return goal
 
 def get_destination(tag):
-    file = open('mapping.json', 'r')
+    file = open(os.path.expanduser(json_path) , 'r')
     content = json.load(file)
-    x = content['mappings'][0]['pose_x']
-    y = content['mappings'][0]['pose_y']
-    print(content['mappings'][0]['pose_x'] + content['mappings'][0]['pose_y'])
+    x = content['mappings'][tag]['pose_x']
+    y = content['mappings'][tag]['pose_y']
+    print(content['mappings'][tag]['pose_x'] + content['mappings'][tag]['pose_y'])
     return getGoal(x, y)
 
 def movebase_client(room):
