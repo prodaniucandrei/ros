@@ -41,9 +41,9 @@ def getGoal(x,y):
 def get_destination(tag):
     file = open(os.path.expanduser(json_path) , 'r')
     content = json.load(file)
-    x = content['mappings'][tag]['pose_x']
-    y = content['mappings'][tag]['pose_y']
-    print(content['mappings'][tag]['pose_x'] + content['mappings'][tag]['pose_y'])
+    x = content['mappings'][tag-1]['pose_x']
+    y = content['mappings'][tag-1]['pose_y']
+    print(content['mappings'][tag-1]['pose_x'] + content['mappings'][tag]['pose_y'])
     return getGoal(x, y)
 
 def movebase_client(room):
