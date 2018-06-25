@@ -19,3 +19,17 @@ def PostPose(room):
     rate.sleep()
     print('published')
     #rospy.signal_shutdown("finished")
+
+def PostAction(action):
+    rospy.set_param('action',action)
+    # print('start publish: ' + action)
+    # rospy.init_node('post_action', disable_signals=True, anonymous=True)
+    # pub = rospy.Publisher('alexa_action', command_msg, queue_size=10)
+    # rate = rospy.Rate(10, reset=True)
+    # rate.sleep()
+    # command = command_msg()
+    # command.command_name = "action"
+    # command.action = action
+    # pub.publish(command)
+    # rate.sleep()
+    # print('published')    
