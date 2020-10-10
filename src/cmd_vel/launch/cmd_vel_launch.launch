@@ -1,0 +1,3 @@
+<launch>
+    <node name="post_cmd" pkg="cmd_vel" type="cmd_vel_publisher.py" output="screen"/>
+</launch>

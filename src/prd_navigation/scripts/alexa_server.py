@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from post_command import PostPose
+from post_command import PostPose, PostAction
 from geometry_msgs.msg import Twist
 import rospy
 from nav_msgs.msg import Odometry
@@ -21,8 +21,10 @@ def navigate(room):
 def querylocations():
     return 'You are reading ' 
 
-@app.route('/actions', methods=['POST'])
-def actions():
+@app.route('/actions/<action>', methods=['POST'])
+def actions(action):
+    rospy.loginfo(action)
+    PostAction(action)
     return 'actions'
 
 @app.route('/interactions', methods=['GET'])

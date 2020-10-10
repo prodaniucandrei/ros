@@ -9,4 +9,6 @@
     <node name="post_cmd" pkg="prd_navigation" type="alexa_server.py" output="screen"/>
 
     <node name="cmd_processor" pkg="prd_navigation" type="command_processor.py" output="screen"/>
+
+    <node name="action_processor" pkg="prd_navigation" type="motion.py" output="screen"/>
 </launch>

@@ -1,0 +1,9 @@
+roslaunch rplidar_ros view_rplidar.launch
+roslaunch hector_slam_launch tutorial.launch
+rosrun map_server map_saver -f myapartament
+
+sudo ethtool -s eth0 speed 100 duplex full
+
+
+
+
